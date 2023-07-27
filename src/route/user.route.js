@@ -1,9 +1,9 @@
 import express from 'express'
-import validation from '../../validation/user.validation';
+import { registerUserValidation } from '../../validation/user.validation';
+import  {registerUserController} from './../controller/user.controller'
+
 
 const router = express.Router()
-router.post('/register', validation.createUserValidation, (req, res, next) => {
-    console.log('user register')
-})
+router.post('/register', registerUserValidation, registerUserController)
 
 module.exports = router;
