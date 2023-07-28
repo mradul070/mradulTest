@@ -15,7 +15,6 @@ export const validateUser =  async function (req,res, next) {
 	} catch (err) {
 		return next(err)
 	}
-    console.log(decoded)
 	let user = await db.User.findOne({where: {id: decoded.userId}})
     user = JSON.parse(JSON.stringify(user));
     delete user.password
@@ -23,7 +22,5 @@ export const validateUser =  async function (req,res, next) {
     if (!req.user) {
 		return next(401)
 	}
-    console.log(req.user)
-
 	return next()
 }
