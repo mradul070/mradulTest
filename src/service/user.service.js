@@ -1,15 +1,17 @@
-const { status } = require("../constants/status");
-const ErrorMessage = require("../helper/errorMessage");
-const db = require("../models");
-
+import {status} from "../constants/status";
+import ErrorMessage from "../helper/errorMessage";
+import db from '../models'
+import {getUserByEmail} from '../helper/helperFunction'
 const registerUserService = async (userBody) => {
-  return await db.User.create(userBody);
+  if (await getUserByEmail(userBody.email)) {
+    throw new ErrorMessage(status.CONFLICT, 'Email is already exist')
+  }
+  let user =  await db.User.create(userBody);
+  user = JSON.parse(JSON.stringify(user));
+  delete user.password
+  return user
 
 };
-
-const checkEmail = async (email) => {
-  return await db.User.findOne({where: {email}})
-}
 
 module.exports = {
   registerUserService
