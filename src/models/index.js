@@ -3,11 +3,19 @@ import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
 const basename = path.basename(__filename);
-const {config} = require('../config/config.js');
+import configuration from '../config/config.js';
+const env = process.env.ENV
+const config = configuration[env]
 const db = {};
 
 
  let sequelize = new Sequelize(config.database, config.username, config.password, config);
+
+ try {
+  sequelize.authenticate();
+} catch (error) {
+  console.error('Unable to connect to the database:', error);
+}
 
 fs
   .readdirSync(__dirname)
@@ -32,5 +40,7 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+
 
 module.exports = db;
