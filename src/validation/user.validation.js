@@ -1,10 +1,12 @@
 import joi from 'joi'
-import errorMessage from '../src/helper/errorMessage';
+import errorMessage from '../helper/errorMessage';
 
-export const loginValidation = async (req, res, next) => {
+export const registerUserValidation = async (req, res, next) => {
     const validation = joi.object().keys({
           email: joi.string().required().email(),
-          password: joi.string().required().min(8).max(20)
+          password: joi.string().required().min(8).max(20),
+          firstName: joi.string().required().min(3),
+          lastName: joi.string().required().min(3)
     })
     const {error} = validation.validate(req.body)
     if (error) {

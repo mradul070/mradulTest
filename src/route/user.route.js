@@ -1,5 +1,5 @@
 import express from 'express'
-import { registerUserValidation } from '../../validation/user.validation';
+import { registerUserValidation } from '../validation/user.validation';
 import  {registerUserController} from './../controller/user.controller'
 import {tryCatch} from '../middleware/tryCatch'
 
