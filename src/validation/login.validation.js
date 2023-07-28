@@ -1,5 +1,7 @@
 import joi from 'joi'
-import errorMessage from '../src/helper/errorMessage';
+import errorMessage from '../helper/errorMessage';
+import { status } from '../constants/status';
+
 
 export const loginValidation = async (req, res, next) => {
     const validation = joi.object().keys({
@@ -8,8 +10,8 @@ export const loginValidation = async (req, res, next) => {
     })
     const {error} = validation.validate(req.body)
     if (error) {
-		res.status(NOT_ACCEPTABLE);
-		return res.json(new errorMessage(NOT_ACCEPTABLE, error.message))
+		res.status(status.NOT_ACCEPTABLE);
+		return res.json(new errorMessage(status.NOT_ACCEPTABLE, error.message))
 	} else {
 		next();
 	}
